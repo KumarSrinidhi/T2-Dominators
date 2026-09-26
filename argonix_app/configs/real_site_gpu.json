@@ -1,0 +1,52 @@
+{
+  "site": "Argus real-footage demo (OpenCV vtest + Kaggle street clip), GPU profile",
+  "analytics_fps": 10,
+  "_gpu_note": "Detector at 960 px with conf 0.1 (MOT17 at 5 fps: HOTA 0.37, recall 0.45 vs 0.29 / 0.28 at 480 px, conf 0.3; README, Accuracy runs). The engine comes from tools/bench_gpu.py --export --models yolo26s --imgsz 960 --batch 2 --workspace 2; without it (or without the tensorrt package) the detector falls back to data/models/yolo26s.pt in fp16. Startup warms every batch size once (~25 s with .pt).",
+  "record": true,
+  "demo": {"scenarios": true},
+  "correlation_window_s": 15,
+  "detector": {"weights": "data/models/yolo26s-960-b2.engine", "tracker": "bytetrack.yaml", "conf": 0.1, "imgsz": 960,
+               "device": "auto", "batched": true, "max_batch": 16, "max_wait_ms": 8},
+  "map": {"width_m": 30, "height_m": 24},
+  "_calibration_note": "No survey data exists for these public clips. cam_campus scale is inferred from person height (1.7 m prior); cam_street from a 3.6 m lane width. Errors are set conservatively and zone tests use them as margins.",
+  "cameras": [
+    {
+      "id": "cam_campus", "name": "Campus path (OpenCV vtest.avi)", "source": "data/real/vtest.avi", "loop": true,
+      "calibration": {
+        "image_points": [[100, 520], [700, 520], [650, 185], [150, 185]],
+        "ground_points": [[3.95, 0], [10.05, 0], [13.4, 9.2], [0.6, 9.2]],
+        "calib_error_m": 1.0
+      },
+      "zones": [
+        {"id": "lawn", "name": "Lawn (keep off)", "criticality": 2,
+         "polygon_px": [[0, 262], [300, 292], [430, 340], [620, 430], [760, 500], [760, 570], [0, 570]],
+         "rules": {"intrusion": {"min_seconds": 2.0}}},
+        {"id": "sign", "name": "Sign / assembly point", "criticality": 1,
+         "polygon_px": [[330, 190], [480, 190], [480, 275], [330, 275]],
+         "rules": {"loitering": {"min_seconds": 15}}},
+        {"id": "path", "name": "Footpath", "criticality": 1,
+         "polygon_px": [[0, 195], [700, 165], [768, 200], [768, 470], [430, 300], [0, 245]],
+         "rules": {"running": {"speed_mps": 2.8, "min_seconds": 1.0}, "crowding": {"max_count": 5, "min_seconds": 3}}}
+      ]
+    },
+    {
+      "id": "cam_street", "name": "Street (Kaggle social-distance clip)", "source": "data/real/social-distance/pedestrian.mp4", "loop": true,
+      "calibration": {
+        "image_points": [[325, 478], [530, 478], [758, 0], [675, 0]],
+        "ground_points": [[20, 0], [23.6, 0], [23.6, 18], [20, 18]],
+        "calib_error_m": 1.5
+      },
+      "_masks_note": "Striped bollard detected as 'person' in 44/49 sampled frames (box x50-90, y230-330); mask covers only its base.",
+      "masks_px": [[[35, 300], [105, 300], [105, 345], [35, 345]]],
+      "zones": [
+        {"id": "roadway", "name": "Roadway (vehicles only)", "criticality": 3,
+         "polygon": [[20.3, -2], [27.5, -2], [27.5, 22], [20.3, 22]],
+         "rules": {"intrusion": {"min_seconds": 2.0}}},
+        {"id": "shoulder", "name": "Shoulder / walkway", "criticality": 1,
+         "polygon": [[15, -2], [20, -2], [20, 22], [15, 22]],
+         "rules": {"running": {"speed_mps": 2.8, "min_seconds": 1.0}, "crowding": {"max_count": 3, "min_seconds": 3},
+                   "loitering": {"min_seconds": 20}}}
+      ]
+    }
+  ]
+}

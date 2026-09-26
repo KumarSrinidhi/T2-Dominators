@@ -1,0 +1,315 @@
+{
+  "site": "Argus Re-ID demo (3 cameras, real pedestrian crops)",
+  "_doc": "Rendered by tools/make_reid_demo.py: walkers on the handoff demo floor plan, pasted as crops of real pedestrians from data/real/vtest.avi with a per-camera colour/blur change. Global IDs are probabilistic, revisable estimates (research-grade), never identities.",
+  "analytics_fps": 5,
+  "record": false,
+  "correlation_window_s": 15,
+  "detector": {
+    "weights": "data/models/yolo26n.pt",
+    "tracker": "bytetrack.yaml",
+    "conf": 0.1,
+    "imgsz": 480
+  },
+  "map": {
+    "width_m": 60,
+    "height_m": 50
+  },
+  "cameras": [
+    {
+      "id": "camA",
+      "name": "Entrance hall",
+      "source": "data/reid_eval/scene/camA.mp4",
+      "loop": true,
+      "health": {
+        "freeze_s": 600
+      },
+      "calibration": {
+        "image_points": [
+          [
+            80,
+            520
+          ],
+          [
+            880,
+            520
+          ],
+          [
+            700,
+            200
+          ],
+          [
+            260,
+            200
+          ]
+        ],
+        "ground_points": [
+          [
+            0,
+            0
+          ],
+          [
+            16,
+            0
+          ],
+          [
+            16,
+            12
+          ],
+          [
+            0,
+            12
+          ]
+        ],
+        "calib_error_m": 0.3,
+        "check_points": {
+          "image": [
+            [
+              480,
+              314
+            ]
+          ],
+          "ground": [
+            [
+              8,
+              6
+            ]
+          ]
+        }
+      },
+      "placement": {
+        "offset_m": [
+          0,
+          0
+        ],
+        "rotation_deg": 0
+      },
+      "zones": []
+    },
+    {
+      "id": "camB",
+      "name": "East corridor",
+      "source": "data/reid_eval/scene/camB.mp4",
+      "loop": true,
+      "health": {
+        "freeze_s": 600
+      },
+      "calibration": {
+        "image_points": [
+          [
+            80,
+            520
+          ],
+          [
+            880,
+            520
+          ],
+          [
+            700,
+            200
+          ],
+          [
+            260,
+            200
+          ]
+        ],
+        "ground_points": [
+          [
+            0,
+            0
+          ],
+          [
+            16,
+            0
+          ],
+          [
+            16,
+            12
+          ],
+          [
+            0,
+            12
+          ]
+        ],
+        "calib_error_m": 0.3,
+        "check_points": {
+          "image": [
+            [
+              480,
+              314
+            ]
+          ],
+          "ground": [
+            [
+              8,
+              6
+            ]
+          ]
+        }
+      },
+      "placement": {
+        "offset_m": [
+          75,
+          0
+        ],
+        "rotation_deg": 0
+      },
+      "zones": []
+    },
+    {
+      "id": "camC",
+      "name": "North wing",
+      "source": "data/reid_eval/scene/camC.mp4",
+      "loop": true,
+      "health": {
+        "freeze_s": 600
+      },
+      "calibration": {
+        "image_points": [
+          [
+            80,
+            520
+          ],
+          [
+            880,
+            520
+          ],
+          [
+            700,
+            200
+          ],
+          [
+            260,
+            200
+          ]
+        ],
+        "ground_points": [
+          [
+            0,
+            0
+          ],
+          [
+            16,
+            0
+          ],
+          [
+            16,
+            12
+          ],
+          [
+            0,
+            12
+          ]
+        ],
+        "calib_error_m": 0.3,
+        "check_points": {
+          "image": [
+            [
+              480,
+              314
+            ]
+          ],
+          "ground": [
+            [
+              8,
+              6
+            ]
+          ]
+        }
+      },
+      "placement": {
+        "offset_m": [
+          37,
+          45
+        ],
+        "rotation_deg": 0
+      },
+      "zones": []
+    }
+  ],
+  "handoff": {
+    "enabled": true,
+    "sim_topology": "demo",
+    "exit_zones_px": {
+      "camA": [
+        {
+          "id": "A_back",
+          "polygon_px": [
+            [
+              401.3,
+              223.3
+            ],
+            [
+              558.7,
+              223.3
+            ],
+            [
+              552.9,
+              192.8
+            ],
+            [
+              407.1,
+              192.8
+            ]
+          ]
+        }
+      ],
+      "camB": [
+        {
+          "id": "B_back",
+          "polygon_px": [
+            [
+              488.7,
+              223.3
+            ],
+            [
+              646.1,
+              223.3
+            ],
+            [
+              633.9,
+              192.8
+            ],
+            [
+              488.1,
+              192.8
+            ]
+          ]
+        }
+      ],
+      "camC": [
+        {
+          "id": "C_back",
+          "polygon_px": [
+            [
+              313.9,
+              223.3
+            ],
+            [
+              471.3,
+              223.3
+            ],
+            [
+              471.9,
+              192.8
+            ],
+            [
+              326.1,
+              192.8
+            ]
+          ]
+        }
+      ]
+    },
+    "max_dt_s": 40,
+    "retrain_every": 25,
+    "cold_start": true,
+    "cold_start_blocking": false
+  },
+  "reid": {
+    "enabled": true,
+    "model": "auto",
+    "device": "auto",
+    "color_mode": "auto",
+    "max_dt_s": 40
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "intrusion_door_tamper",
+  "title": "Restricted-zone entry, forced door, then a covered camera",
+  "description": "Scripted DEMO on the first camera and its first zone: a restricted-zone entry, an access-control 'door forced' report 8 s later (grouped into the same alert and incident), a camera cover at 15 s that the health monitor detects, and recovery at 30 s. Every event is labelled DEMO and excluded from precision, baselines and hotspots.",
+  "steps": [
+    {"at": 0, "action": "event", "rule": "intrusion",
+     "observation": "Person-sized track entered the restricted zone (scripted)"},
+    {"at": 8, "action": "sensor", "type": "door_forced", "source_id": "panel1", "door": "D1"},
+    {"at": 15, "action": "tamper", "fault": "cover", "seconds": 15},
+    {"at": 30, "action": "recover"}
+  ]
+}

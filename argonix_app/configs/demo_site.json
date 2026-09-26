@@ -1,0 +1,283 @@
+{
+  "site": "Argus demo site (synthetic)",
+  "analytics_fps": 5,
+  "record": true,
+  "correlation_window_s": 15,
+  "detector": {
+    "weights": "data/models/yolo26n.pt",
+    "tracker": "bytetrack.yaml",
+    "conf": 0.1,
+    "imgsz": 480
+  },
+  "map": {
+    "width_m": 16,
+    "height_m": 12
+  },
+  "cameras": [
+    {
+      "id": "cam1",
+      "name": "Server wing",
+      "source": "data/synth/cam1.mp4",
+      "loop": true,
+      "calibration": {
+        "image_points": [
+          [
+            80,
+            520
+          ],
+          [
+            880,
+            520
+          ],
+          [
+            700,
+            200
+          ],
+          [
+            260,
+            200
+          ]
+        ],
+        "ground_points": [
+          [
+            0,
+            0
+          ],
+          [
+            16,
+            0
+          ],
+          [
+            16,
+            12
+          ],
+          [
+            0,
+            12
+          ]
+        ],
+        "calib_error_m": 0.3,
+        "check_points": {
+          "image": [
+            [
+              480,
+              314
+            ]
+          ],
+          "ground": [
+            [
+              8,
+              6
+            ]
+          ]
+        }
+      },
+      "zones": [
+        {
+          "id": "server_door",
+          "name": "Server room door",
+          "criticality": 3,
+          "site_zone": "server_door",
+          "polygon": [
+            [
+              11,
+              4
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              15,
+              9
+            ],
+            [
+              11,
+              9
+            ]
+          ],
+          "rules": {
+            "intrusion": {
+              "min_seconds": 1.0
+            },
+            "loitering": {
+              "min_seconds": 6
+            }
+          }
+        },
+        {
+          "id": "walkway",
+          "name": "Walkway",
+          "criticality": 1,
+          "polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              16,
+              0
+            ],
+            [
+              16,
+              3
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "rules": {
+            "running": {
+              "speed_mps": 2.5
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cam2",
+      "name": "Lobby",
+      "source": "data/synth/cam2.mp4",
+      "loop": true,
+      "calibration": {
+        "image_points": [
+          [
+            80,
+            520
+          ],
+          [
+            880,
+            520
+          ],
+          [
+            700,
+            200
+          ],
+          [
+            260,
+            200
+          ]
+        ],
+        "ground_points": [
+          [
+            0,
+            0
+          ],
+          [
+            16,
+            0
+          ],
+          [
+            16,
+            12
+          ],
+          [
+            0,
+            12
+          ]
+        ],
+        "calib_error_m": 0.3,
+        "check_points": {
+          "image": [
+            [
+              480,
+              314
+            ]
+          ],
+          "ground": [
+            [
+              8,
+              6
+            ]
+          ]
+        }
+      },
+      "zones": [
+        {
+          "id": "corridor",
+          "name": "One-way corridor",
+          "criticality": 2,
+          "direction": [
+            1,
+            0
+          ],
+          "polygon": [
+            [
+              1,
+              1
+            ],
+            [
+              15,
+              1
+            ],
+            [
+              15,
+              5
+            ],
+            [
+              1,
+              5
+            ]
+          ],
+          "rules": {
+            "wrong_way": {
+              "min_seconds": 1.5
+            }
+          }
+        },
+        {
+          "id": "lobby",
+          "name": "Lobby",
+          "criticality": 1,
+          "polygon": [
+            [
+              2,
+              6.5
+            ],
+            [
+              14,
+              6.5
+            ],
+            [
+              14,
+              11
+            ],
+            [
+              2,
+              11
+            ]
+          ],
+          "rules": {
+            "crowding": {
+              "max_count": 3,
+              "min_seconds": 3
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "sensors": {
+    "sources": [
+      {
+        "id": "door-ctrl-1",
+        "name": "Door controller (simulated)",
+        "kind": "door controller",
+        "secret_env": "ARGONIX_SENSOR_SECRET_DOOR1",
+        "doors": {
+          "D1": {
+            "name": "Server room door",
+            "camera": "cam1",
+            "zone": "server_door"
+          },
+          "D2": {
+            "name": "Lobby entrance",
+            "camera": "cam2",
+            "zone": "lobby"
+          }
+        }
+      }
+    ]
+  }
+}

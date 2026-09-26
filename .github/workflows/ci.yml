@@ -1,0 +1,50 @@
+name: ci
+
+# Tests + a syntax/undefined-name lint for the runnable app (argonix_app/). Doc-only and manual/ changes do not run it.
+on:
+  push:
+    paths: ["argonix_app/**", ".github/workflows/ci.yml"]
+  pull_request:
+    paths: ["argonix_app/**", ".github/workflows/ci.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: argonix_app
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: System libraries for OpenCV
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq libgl1 libglib2.0-0
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.13"
+          enable-cache: true
+          cache-dependency-glob: argonix_app/uv.lock
+
+      # CPU-only torch. Every later step uses `uv run --no-sync`: a plain `uv run` would re-sync the default
+      # environment (no extra) and replace the CPU wheel.
+      - name: Install (CPU torch)
+        run: uv sync --extra cpu
+
+      - name: Lint (syntax errors and undefined names only)
+        working-directory: .
+        run: uvx ruff check argonix_app --select E9,F63,F7,F82
+
+      # tests/conftest.py renders the synthetic demo clips once when data/synth is missing; that needs yolo26n.pt,
+      # which Ultralytics downloads from its GitHub release on first use. Tests that run the detector over whole
+      # videos are marked `slow` and skipped here.
+      - name: Tests (not slow)
+        run: uv run --no-sync pytest -q -p no:warnings -m "not slow"

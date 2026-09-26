@@ -1,0 +1,64 @@
+# Argus RTSP replay harness (manual §18): MediaMTX configuration TEMPLATE (MediaMTX v1.21, MIT licence).
+#
+# tools/rtsp_replay.ps1 renders this file into its runtime directory (default %USERPROFILE%\argonix_rtsp,
+# outside git), replacing the __PLACEHOLDERS__. The viewer password is generated at random on first start and kept
+# only in <runtime>\secrets.json. Never write a real password into this template.
+#
+# Mimics a small CCTV estate: every replayed clip is published as <name> (main stream, original resolution) and
+# <name>_sub (downscaled sub-stream), RTSP over TCP only, basic auth with a low-privilege read-only "viewer" account.
+# Settings not listed here keep MediaMTX's defaults.
+#
+# This instance is only the camera stand-in (the "cameras"). Argus's optional restreamer (WebRTC live view and
+# main-stream recording, argonix/restream.py) is a SECOND MediaMTX that Argus starts from the same binary with its
+# own generated config (API 127.0.0.1:9987, WHEP 127.0.0.1:8889, ICE/UDP 8189) and that pulls <name> from here as
+# 'viewer'; see configs/restream_site.json and README "Smooth live view and main-stream recording".
+
+logLevel: info
+logDestinations: [file]
+logFile: __LOG_FILE__
+readTimeout: 10s
+writeTimeout: 10s
+
+authMethod: internal
+authInternalUsers:
+  # Publishers (the ffmpeg replay processes, standing in for the cameras' encoders) are only accepted from
+  # localhost, so their command lines carry no secret.
+  - user: any
+    pass:
+    ips: ["127.0.0.1", "::1"]
+    permissions:
+      - action: publish
+      - action: api
+  # What Argus uses: a dedicated read-only account, as README "Connecting existing CCTV" recommends.
+  - user: viewer
+    pass: __VIEWER_PASS__
+    ips: []
+    permissions:
+      - action: read
+  # __ANON_READ__ (rtsp_replay.ps1 -NoAuth turns this into anonymous read access)
+
+# Local control API: used by `rtsp_replay.ps1 status` and tools/rtsp_e2e.py to see when a path is (re)published.
+api: true
+apiAddress: 127.0.0.1:9997
+metrics: false
+pprof: false
+playback: false
+
+rtsp: true
+rtspTransports: [tcp]
+rtspEncryption: "no"
+rtspAddress: __RTSP_ADDRESS__
+rtspAuthMethods: [basic]
+
+# Everything else off: only RTSP on the address above (MediaMTX >= 1.21 also enables a MoQ server by default).
+rtmp: false
+hls: false
+webrtc: false
+srt: false
+moq: false
+
+pathDefaults:
+  overridePublisher: true
+
+paths:
+  all_others:

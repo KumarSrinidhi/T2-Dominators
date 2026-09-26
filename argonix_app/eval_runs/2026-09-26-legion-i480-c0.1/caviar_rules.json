@@ -1,0 +1,540 @@
+{
+ "meta": {
+  "date": "2026-09-26",
+  "started": "2026-09-26T03:10:44",
+  "hardware": {
+   "host": "LEGION",
+   "os": "Windows-10-10.0.26200-SP0",
+   "cpu": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+   "cpu_count": 24,
+   "torch": "2.14.0+cu126",
+   "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU"
+  },
+  "detector": {
+   "weights": "C:\\Users\\Luikz\\argonix\\argonix_app\\data\\models\\yolo26s.pt",
+   "tracker": "bytetrack.yaml",
+   "conf": 0.1,
+   "imgsz": 480,
+   "device": "cuda:0",
+   "batched": null,
+   "max_batch": 16,
+   "max_wait_ms": 8
+  },
+  "smoke": false,
+  "command": "tools\\eval_datasets.py --only caviar --root C:\\Users\\Luikz\\argonix_datasets --device cuda:0 --imgsz 480 --conf 0.1 --label legion-i480-c0.1"
+ },
+ "space": "image_px",
+ "calibration": {
+  "state": "none",
+  "note": "CAVIAR publishes no ground-plane calibration: zones and thresholds are in image pixels; running uses body-heights/s"
+ },
+ "rules": {
+  "loitering": {
+   "min_seconds": 20
+  },
+  "crowding": {
+   "max_count": 1,
+   "min_seconds": 3
+  },
+  "running": {
+   "speed_bh_s": 1.5,
+   "min_seconds": 1.0
+  }
+ },
+ "altercation_enabled": false,
+ "analytics_fps": 5.0,
+ "matching": {
+  "temporal_tolerance_s": 2.0,
+  "proximity_px": 30.0,
+  "rule": "an event is a true positive when its interval overlaps a ground-truth episode (+-tolerance) of the target behaviour in the same clip AND, in a shared frame of that overlap, the centre of one of the event's track boxes is within proximity_px of the episode's box (group box or a member's box). Many-to-one both ways: precision = true events / events, recall = episodes hit / episodes.",
+  "episodes": "CVML labels: running = object movement 'running' >= 1 s; fighting = group context/situation 'fighting' >= 1 s; meeting = group context 'meeting' >= 3 s; browsing_or_inactive_20s = object situation browsing/inactive or movement inactive >= 20 s; left_object = role 'leaving object'. Runs merged over <= 0.5 s gaps."
+ },
+ "runs": {
+  "colour": {
+   "summary": {
+    "clips": 27,
+    "frames": 5159,
+    "duration_s": 1040.9,
+    "tracks_10plus": 52,
+    "dets_per_frame": 0.41,
+    "mean_det_conf": 0.316,
+    "detect_ms_median": 400.8,
+    "median_moving_speed_mps": null,
+    "monochrome": [
+     "False"
+    ],
+    "events_by_rule": {
+     "crowding": 5,
+     "loitering": 2
+    }
+   },
+   "scores": {
+    "browsing_or_inactive_20s vs loitering": {
+     "gt_episodes": 4,
+     "events": 2,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": 0.0,
+     "precision_wilson95": [
+      0.0,
+      0.658
+     ],
+     "recall": 0.0,
+     "recall_wilson95": [
+      0.0,
+      0.49
+     ],
+     "behaviour": "browsing_or_inactive_20s",
+     "rule": "loitering",
+     "role": "primary: dwell >= 20 s",
+     "rule_enabled": true
+    },
+    "running vs running": {
+     "gt_episodes": 8,
+     "events": 0,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": null,
+     "precision_wilson95": null,
+     "recall": 0.0,
+     "recall_wilson95": [
+      0.0,
+      0.324
+     ],
+     "behaviour": "running",
+     "rule": "running",
+     "role": "primary",
+     "rule_enabled": true
+    },
+    "meeting vs crowding": {
+     "gt_episodes": 10,
+     "events": 5,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": 0.0,
+     "precision_wilson95": [
+      0.0,
+      0.434
+     ],
+     "recall": 0.0,
+     "recall_wilson95": [
+      0.0,
+      0.278
+     ],
+     "behaviour": "meeting",
+     "rule": "crowding",
+     "role": "proxy: > 1 person in view is not a meeting",
+     "rule_enabled": true
+    },
+    "fighting vs altercation": {
+     "gt_episodes": 4,
+     "events": 0,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": null,
+     "precision_wilson95": null,
+     "recall": 0.0,
+     "recall_wilson95": [
+      0.0,
+      0.49
+     ],
+     "behaviour": "fighting",
+     "rule": "altercation",
+     "role": "primary (only with --threats)",
+     "rule_enabled": false
+    },
+    "fighting vs running": {
+     "gt_episodes": 4,
+     "events": 0,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": null,
+     "precision_wilson95": null,
+     "recall": 0.0,
+     "recall_wilson95": [
+      0.0,
+      0.49
+     ],
+     "behaviour": "fighting",
+     "rule": "running",
+     "role": "secondary",
+     "rule_enabled": true
+    },
+    "left_object (no Argus rule)": {
+     "gt_episodes": 4,
+     "events": 0,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": null,
+     "precision_wilson95": null,
+     "recall": 0.0,
+     "recall_wilson95": [
+      0.0,
+      0.49
+     ],
+     "behaviour": "left_object",
+     "rule": null,
+     "role": "no Argus rule",
+     "rule_enabled": false
+    }
+   },
+   "per_clip": {
+    "Browse1": {
+     "gt_episodes": {
+      "browsing_or_inactive_20s": 1
+     },
+     "events_by_rule": {
+      "crowding": 1
+     },
+     "tracks_10plus": 4,
+     "dets_per_frame": 0.69,
+     "frames": 1044,
+     "events": [
+      {
+       "rule": "crowding",
+       "f0": 605,
+       "f1": 680,
+       "tracks": [
+        27,
+        28
+       ]
+      }
+     ]
+    },
+    "Browse2": {
+     "gt_episodes": {},
+     "events_by_rule": {
+      "loitering": 1
+     },
+     "tracks_10plus": 3,
+     "dets_per_frame": 0.87,
+     "frames": 876,
+     "events": [
+      {
+       "rule": "loitering",
+       "f0": 5,
+       "f1": 505,
+       "tracks": [
+        1
+       ]
+      }
+     ]
+    },
+    "Browse3": {
+     "gt_episodes": {},
+     "events_by_rule": {},
+     "tracks_10plus": 3,
+     "dets_per_frame": 0.43,
+     "frames": 912,
+     "events": []
+    },
+    "Browse4": {
+     "gt_episodes": {},
+     "events_by_rule": {},
+     "tracks_10plus": 1,
+     "dets_per_frame": 0.26,
+     "frames": 1140,
+     "events": []
+    },
+    "Browse_WhileWaiting1": {
+     "gt_episodes": {},
+     "events_by_rule": {},
+     "tracks_10plus": 0,
+     "dets_per_frame": 0.11,
+     "frames": 792,
+     "events": []
+    },
+    "Browse_WhileWaiting2": {
+     "gt_episodes": {},
+     "events_by_rule": {},
+     "tracks_10plus": 3,
+     "dets_per_frame": 0.36,
+     "frames": 1896,
+     "events": []
+    },
+    "Fight_Chase": {
+     "gt_episodes": {
+      "running": 2,
+      "fighting": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 0,
+     "dets_per_frame": 0.15,
+     "frames": 432,
+     "events": []
+    },
+    "Fight_OneManDown": {
+     "gt_episodes": {
+      "running": 1,
+      "fighting": 1
+     },
+     "events_by_rule": {
+      "crowding": 1
+     },
+     "tracks_10plus": 5,
+     "dets_per_frame": 0.86,
+     "frames": 960,
+     "events": [
+      {
+       "rule": "crowding",
+       "f0": 260,
+       "f1": 340,
+       "tracks": [
+        1,
+        26
+       ]
+      }
+     ]
+    },
+    "Fight_RunAway1": {
+     "gt_episodes": {
+      "running": 2,
+      "fighting": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 1,
+     "dets_per_frame": 0.71,
+     "frames": 551,
+     "events": []
+    },
+    "Fight_RunAway2": {
+     "gt_episodes": {
+      "running": 1,
+      "fighting": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 1,
+     "dets_per_frame": 0.19,
+     "frames": 552,
+     "events": []
+    },
+    "LeftBag": {
+     "gt_episodes": {
+      "meeting": 1,
+      "left_object": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 4,
+     "dets_per_frame": 0.25,
+     "frames": 1440,
+     "events": []
+    },
+    "LeftBag_AtChair": {
+     "gt_episodes": {
+      "left_object": 1
+     },
+     "events_by_rule": {
+      "crowding": 1
+     },
+     "tracks_10plus": 2,
+     "dets_per_frame": 0.78,
+     "frames": 1115,
+     "events": [
+      {
+       "rule": "crowding",
+       "f0": 5,
+       "f1": 90,
+       "tracks": [
+        1,
+        3
+       ]
+      }
+     ]
+    },
+    "LeftBag_BehindChair": {
+     "gt_episodes": {
+      "running": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 1,
+     "dets_per_frame": 0.12,
+     "frames": 1068,
+     "events": []
+    },
+    "LeftBag_PickedUp": {
+     "gt_episodes": {
+      "running": 1,
+      "left_object": 1
+     },
+     "events_by_rule": {
+      "crowding": 1
+     },
+     "tracks_10plus": 6,
+     "dets_per_frame": 0.46,
+     "frames": 1356,
+     "events": [
+      {
+       "rule": "crowding",
+       "f0": 930,
+       "f1": 1005,
+       "tracks": [
+        32,
+        36
+       ]
+      }
+     ]
+    },
+    "LeftBox": {
+     "gt_episodes": {
+      "left_object": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 0,
+     "dets_per_frame": 0.03,
+     "frames": 864,
+     "events": []
+    },
+    "Meet_Crowd": {
+     "gt_episodes": {},
+     "events_by_rule": {},
+     "tracks_10plus": 1,
+     "dets_per_frame": 0.15,
+     "frames": 490,
+     "events": []
+    },
+    "Meet_Split_3rdGuy": {
+     "gt_episodes": {
+      "meeting": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 1,
+     "dets_per_frame": 0.21,
+     "frames": 924,
+     "events": []
+    },
+    "Meet_WalkSplit": {
+     "gt_episodes": {
+      "meeting": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 0,
+     "dets_per_frame": 0.07,
+     "frames": 624,
+     "events": []
+    },
+    "Meet_WalkTogether1": {
+     "gt_episodes": {
+      "meeting": 2
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 2,
+     "dets_per_frame": 0.3,
+     "frames": 708,
+     "events": []
+    },
+    "Meet_WalkTogether2": {
+     "gt_episodes": {
+      "meeting": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 2,
+     "dets_per_frame": 0.46,
+     "frames": 827,
+     "events": []
+    },
+    "Rest_FallOnFloor": {
+     "gt_episodes": {
+      "meeting": 1
+     },
+     "events_by_rule": {
+      "crowding": 1,
+      "loitering": 1
+     },
+     "tracks_10plus": 2,
+     "dets_per_frame": 0.74,
+     "frames": 1008,
+     "events": [
+      {
+       "rule": "crowding",
+       "f0": 690,
+       "f1": 775,
+       "tracks": [
+        9,
+        13
+       ]
+      },
+      {
+       "rule": "loitering",
+       "f0": 495,
+       "f1": 995,
+       "tracks": [
+        9
+       ]
+      }
+     ]
+    },
+    "Rest_InChair": {
+     "gt_episodes": {},
+     "events_by_rule": {},
+     "tracks_10plus": 1,
+     "dets_per_frame": 0.45,
+     "frames": 1008,
+     "events": []
+    },
+    "Rest_SlumpOnFloor": {
+     "gt_episodes": {},
+     "events_by_rule": {},
+     "tracks_10plus": 3,
+     "dets_per_frame": 0.63,
+     "frames": 912,
+     "events": []
+    },
+    "Rest_WiggleOnFloor": {
+     "gt_episodes": {
+      "meeting": 1,
+      "browsing_or_inactive_20s": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 1,
+     "dets_per_frame": 0.4,
+     "frames": 1296,
+     "events": []
+    },
+    "Walk1": {
+     "gt_episodes": {
+      "meeting": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 2,
+     "dets_per_frame": 0.5,
+     "frames": 612,
+     "events": []
+    },
+    "Walk2": {
+     "gt_episodes": {
+      "meeting": 1,
+      "browsing_or_inactive_20s": 2
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 1,
+     "dets_per_frame": 0.38,
+     "frames": 1056,
+     "events": []
+    },
+    "Walk3": {
+     "gt_episodes": {},
+     "events_by_rule": {},
+     "tracks_10plus": 2,
+     "dets_per_frame": 0.55,
+     "frames": 1380,
+     "events": []
+    }
+   },
+   "wall_s": 108.9,
+   "model": {
+    "detector": "yolo26s.pt",
+    "tracker": "bytetrack.yaml",
+    "framework": "ultralytics 8.4.161",
+    "conf_threshold": 0.1,
+    "imgsz": 480,
+    "device": "cuda:0",
+    "fp16": true,
+    "runtime": "torch",
+    "batched": true,
+    "max_batch": 16,
+    "max_wait_ms": 8.0
+   }
+  }
+ },
+ "eval_wall_s": 252.1
+}

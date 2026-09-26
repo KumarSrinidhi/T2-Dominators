@@ -1,0 +1,332 @@
+{
+  "version": 1,
+  "_doc": "Public test footage for Argus. tools/datasets.py fetches, verifies (sha256 pinned after the first verified download with --pin) and converts these to H.264 mp4. Official/primary sources only; licences summarised here are not legal advice -- read terms_url before any use beyond private research/testing. Nothing here is redistributed by this repository.",
+  "budget_gb": 8,
+  "ship_budget_mb": 400,
+  "datasets": [
+    {
+      "id": "caviar",
+      "name": "CAVIAR test case scenarios, first set (INRIA Labs Grenoble entrance lobby)",
+      "landing": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/",
+      "project": "https://homepages.inf.ed.ac.uk/rbf/CAVIAR/",
+      "licence_short": "free for research use with acknowledgement (EC CAVIAR project IST 2001 37540)",
+      "licence": "Published openly by the EC-funded CAVIAR project (University of Edinburgh). The page asks that publications using the data acknowledge the EC Funded CAVIAR project/IST 2001 37540 and cite the URL. No other licence text is given; treat as research/teaching use with acknowledgement and do not redistribute the footage.",
+      "terms_url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/",
+      "citation": "EC Funded CAVIAR project/IST 2001 37540, https://homepages.inf.ed.ac.uk/rbf/CAVIAR/",
+      "format": "MPEG-1 384x288 @ 25 fps, one fixed wide-angle ceiling camera; CVML XML ground truth per frame (boxes + movement/role/context/situation labels, groups)",
+      "exercises": "loitering vs browsing/inactive, crowding(>1) as a proxy for meeting, running and the altercation analyzer vs fighting, left objects (no Argus rule: reported as unsupported), tracking in a distorted wide-angle indoor view; grayscale variants of 3 clips",
+      "annotations": "per-frame CVML XML (fomdgt1.xml of the three Fight_OneManDown files is used)",
+      "size_bytes": 380000000,
+      "fetch": [
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Walk1/Walk1.mpg",
+          "dest": "caviar/raw/Walk1.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Walk1/wk1gt.xml",
+          "dest": "caviar/gt/Walk1.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Walk2/Walk2.mpg",
+          "dest": "caviar/raw/Walk2.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Walk2/wk2gt.xml",
+          "dest": "caviar/gt/Walk2.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Walk3/Walk3.mpg",
+          "dest": "caviar/raw/Walk3.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Walk3/wk3gt.xml",
+          "dest": "caviar/gt/Walk3.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse1/Browse1.mpg",
+          "dest": "caviar/raw/Browse1.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse1/br1gt.xml",
+          "dest": "caviar/gt/Browse1.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse2/Browse2.mpg",
+          "dest": "caviar/raw/Browse2.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse2/br2gt.xml",
+          "dest": "caviar/gt/Browse2.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse3/Browse3.mpg",
+          "dest": "caviar/raw/Browse3.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse3/br3gt.xml",
+          "dest": "caviar/gt/Browse3.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse4/Browse4.mpg",
+          "dest": "caviar/raw/Browse4.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse4/br4gt.xml",
+          "dest": "caviar/gt/Browse4.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse_WhileWaiting1/Browse_WhileWaiting1.mpg",
+          "dest": "caviar/raw/Browse_WhileWaiting1.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse_WhileWaiting1/bww1gt.xml",
+          "dest": "caviar/gt/Browse_WhileWaiting1.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse_WhileWaiting2/Browse_WhileWaiting2.mpg",
+          "dest": "caviar/raw/Browse_WhileWaiting2.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Browse_WhileWaiting2/bww2gt.xml",
+          "dest": "caviar/gt/Browse_WhileWaiting2.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Rest_InChair/Rest_InChair.mpg",
+          "dest": "caviar/raw/Rest_InChair.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Rest_InChair/ricgt.xml",
+          "dest": "caviar/gt/Rest_InChair.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Rest_SlumpOnFloor/Rest_SlumpOnFloor.mpg",
+          "dest": "caviar/raw/Rest_SlumpOnFloor.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Rest_SlumpOnFloor/rsfgt.xml",
+          "dest": "caviar/gt/Rest_SlumpOnFloor.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Rest_WiggleOnFloor/Rest_WiggleOnFloor.mpg",
+          "dest": "caviar/raw/Rest_WiggleOnFloor.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Rest_WiggleOnFloor/rwgt.xml",
+          "dest": "caviar/gt/Rest_WiggleOnFloor.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Rest_FallOnFloor/Rest_FallOnFloor.mpg",
+          "dest": "caviar/raw/Rest_FallOnFloor.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Rest_FallOnFloor/rffgt.xml",
+          "dest": "caviar/gt/Rest_FallOnFloor.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/LeftBag/LeftBag.mpg",
+          "dest": "caviar/raw/LeftBag.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/LeftBag/lb1gt.xml",
+          "dest": "caviar/gt/LeftBag.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/LeftBag_AtChair/LeftBag_AtChair.mpg",
+          "dest": "caviar/raw/LeftBag_AtChair.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/LeftBag_AtChair/lb2gt.xml",
+          "dest": "caviar/gt/LeftBag_AtChair.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/LeftBag_BehindChair/LeftBag_BehindChair.mpg",
+          "dest": "caviar/raw/LeftBag_BehindChair.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/LeftBag_BehindChair/lbbcgt.xml",
+          "dest": "caviar/gt/LeftBag_BehindChair.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/LeftBox/LeftBox.mpg",
+          "dest": "caviar/raw/LeftBox.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/LeftBox/lbgt.xml",
+          "dest": "caviar/gt/LeftBox.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/LeftBag_PickedUp/LeftBag_PickedUp.mpg",
+          "dest": "caviar/raw/LeftBag_PickedUp.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/LeftBag_PickedUp/lbpugt.xml",
+          "dest": "caviar/gt/LeftBag_PickedUp.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Meet_WalkTogether1/Meet_WalkTogether1.mpg",
+          "dest": "caviar/raw/Meet_WalkTogether1.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Meet_WalkTogether1/mwt1gt.xml",
+          "dest": "caviar/gt/Meet_WalkTogether1.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Meet_WalkTogether2/Meet_WalkTogether2.mpg",
+          "dest": "caviar/raw/Meet_WalkTogether2.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Meet_WalkTogether2/mwt2gt.xml",
+          "dest": "caviar/gt/Meet_WalkTogether2.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Meet_WalkSplit/Meet_WalkSplit.mpg",
+          "dest": "caviar/raw/Meet_WalkSplit.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Meet_WalkSplit/mws1gt.xml",
+          "dest": "caviar/gt/Meet_WalkSplit.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Meet_Split_3rdGuy/Meet_Split_3rdGuy.mpg",
+          "dest": "caviar/raw/Meet_Split_3rdGuy.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Meet_Split_3rdGuy/ms3ggt.xml",
+          "dest": "caviar/gt/Meet_Split_3rdGuy.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Meet_Crowd/Meet_Crowd.mpg",
+          "dest": "caviar/raw/Meet_Crowd.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Meet_Crowd/mc1gt.xml",
+          "dest": "caviar/gt/Meet_Crowd.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Fight_RunAway1/Fight_RunAway1.mpg",
+          "dest": "caviar/raw/Fight_RunAway1.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Fight_RunAway1/fra1gt.xml",
+          "dest": "caviar/gt/Fight_RunAway1.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Fight_RunAway2/Fight_RunAway2.mpg",
+          "dest": "caviar/raw/Fight_RunAway2.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Fight_RunAway2/fra2gt.xml",
+          "dest": "caviar/gt/Fight_RunAway2.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Fight_OneManDown/Fight_OneManDown.mpg",
+          "dest": "caviar/raw/Fight_OneManDown.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Fight_OneManDown/fomdgt1.xml",
+          "dest": "caviar/gt/Fight_OneManDown.xml"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Fight_Chase/Fight_Chase.mpg",
+          "dest": "caviar/raw/Fight_Chase.mpg"
+        },
+        {
+          "url": "https://homepages.inf.ed.ac.uk/rbf/CAVIARDATA1/Fight_Chase/fcgt.xml",
+          "dest": "caviar/gt/Fight_Chase.xml"
+        }
+      ],
+      "convert": [
+        {
+          "src_glob": "caviar/raw/*.mpg",
+          "dst_dir": "caviar/mp4",
+          "variants": [
+            "gray"
+          ],
+          "variant_only": [
+            "Fight_OneManDown",
+            "Meet_Crowd",
+            "Browse_WhileWaiting1"
+          ]
+        }
+      ],
+      "ship": [
+        "caviar/mp4/*.mp4",
+        "caviar/gt/*.xml"
+      ],
+      "laptop_subset": [
+        "caviar/mp4/Fight_OneManDown.mp4",
+        "caviar/gt/Fight_OneManDown.xml"
+      ]
+    },
+    {
+      "id": "mot17",
+      "name": "MOT17 multi-object tracking benchmark, train split, FRCNN copies of the 7 sequences (MOTChallenge)",
+      "landing": "https://motchallenge.net/data/MOT17/",
+      "licence_short": "MOTChallenge terms: research / non-commercial use with citation; do not redistribute",
+      "licence": "MOTChallenge data historically published under CC BY-NC-SA 3.0; the archived data page fetched 2026-09-25 restates no licence text (the evaluation service is closed, results frozen 2026-04-16). Treat as non-commercial research use with citation and do not redistribute frames or ground truth.",
+      "terms_url": "https://motchallenge.net/data/MOT17/",
+      "citation": "A. Milan, L. Leal-Taixe, I. Reid, S. Roth, K. Schindler: MOT16: A Benchmark for Multi-Object Tracking, arXiv:1603.00831",
+      "format": "JPEG frame sequences (1920x1080 @ 30 fps; MOT17-05 640x480 @ 14 fps; MOT17-13 1920x1080 @ 25 fps) + gt/gt.txt (frame, id, box, consider, class, visibility)",
+      "exercises": "tracking accuracy of detector + ByteTrack (MOTA/MOTP, IDF1, HOTA) at the 5 fps analytics rate and at full frame rate (tools/eval_datasets.py --only mot17)",
+      "annotations": "MOTChallenge gt.txt per sequence; the three detector copies (DPM/FRCNN/SDP) share frames and GT, only FRCNN is fetched",
+      "size_bytes": 900000000,
+      "default": false,
+      "fetch": [
+        {
+          "zip_url": "https://motchallenge.net/data/MOT17.zip",
+          "dest_dir": "mot17/raw",
+          "strip": 1,
+          "members": [
+            "MOT17/train/MOT17-02-FRCNN/",
+            "MOT17/train/MOT17-04-FRCNN/",
+            "MOT17/train/MOT17-05-FRCNN/",
+            "MOT17/train/MOT17-09-FRCNN/",
+            "MOT17/train/MOT17-10-FRCNN/",
+            "MOT17/train/MOT17-11-FRCNN/",
+            "MOT17/train/MOT17-13-FRCNN/"
+          ]
+        }
+      ],
+      "convert": [
+        {
+          "frames_dir_glob": "mot17/raw/train/MOT17-0[249]-FRCNN/img1",
+          "pattern": "%06d.jpg",
+          "fps": 30,
+          "name_template": "{parent}",
+          "dst_dir": "mot17/mp4",
+          "crf": 18
+        },
+        {
+          "frames_dir_glob": "mot17/raw/train/MOT17-1[01]-FRCNN/img1",
+          "pattern": "%06d.jpg",
+          "fps": 30,
+          "name_template": "{parent}",
+          "dst_dir": "mot17/mp4",
+          "crf": 18
+        },
+        {
+          "frames_dir_glob": "mot17/raw/train/MOT17-05-FRCNN/img1",
+          "pattern": "%06d.jpg",
+          "fps": 14,
+          "name_template": "{parent}",
+          "dst_dir": "mot17/mp4",
+          "crf": 18
+        },
+        {
+          "frames_dir_glob": "mot17/raw/train/MOT17-13-FRCNN/img1",
+          "pattern": "%06d.jpg",
+          "fps": 25,
+          "name_template": "{parent}",
+          "dst_dir": "mot17/mp4",
+          "crf": 18
+        }
+      ],
+      "ship": [
+        "mot17/mp4/MOT17-??-FRCNN.mp4",
+        "mot17/raw/train/*/gt/gt.txt",
+        "mot17/raw/train/*/seqinfo.ini"
+      ],
+      "laptop_subset": []
+    }
+  ]
+}

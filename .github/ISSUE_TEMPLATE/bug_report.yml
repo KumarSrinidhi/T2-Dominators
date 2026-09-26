@@ -1,0 +1,46 @@
+name: Bug report
+description: Something in Argus doesn't work as documented
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. For a security problem, don't open an issue: see SECURITY.md.
+        Remove camera passwords, tokens and hostnames from anything you paste.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. uv run python run.py --config configs/... --open-demo
+        2. Open ... and click ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log output
+      description: The relevant part of the app log (or `app.log` on a service host).
+      render: text
+  - type: input
+    id: config
+    attributes:
+      label: Config
+      description: Which site config (e.g. `configs/real_site.json`), and anything you changed in it.
+  - type: dropdown
+    id: hardware
+    attributes:
+      label: Detector hardware
+      options: [CPU only, NVIDIA GPU (.pt), NVIDIA GPU (TensorRT engine), Remote inference node]
+  - type: input
+    id: platform
+    attributes:
+      label: OS and Python
+      placeholder: Windows 11, Python 3.13

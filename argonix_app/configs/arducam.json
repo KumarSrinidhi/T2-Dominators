@@ -1,0 +1,92 @@
+{
+  "site": "Arducam 16MP USB camera (uncalibrated, pixel zones)",
+  "analytics_fps": 5,
+  "record": false,
+  "correlation_window_s": 15,
+  "detector": {
+    "weights": "data/models/yolo26n.pt",
+    "tracker": "bytetrack.yaml",
+    "conf": 0.1,
+    "imgsz": 480,
+    "device": "auto"
+  },
+  "map": {
+    "width_m": 10,
+    "height_m": 8
+  },
+  "cameras": [
+    {
+      "id": "arducam",
+      "name": "Arducam 16MP (USB)",
+      "source": "2",
+      "capture": {
+        "width": 1280,
+        "height": 720,
+        "fps": 30,
+        "fourcc": "MJPG"
+      },
+      "zones": [
+        {
+          "id": "room",
+          "name": "Whole view",
+          "criticality": 1,
+          "polygon_px": [
+            [
+              0,
+              0
+            ],
+            [
+              1280,
+              0
+            ],
+            [
+              1280,
+              720
+            ],
+            [
+              0,
+              720
+            ]
+          ],
+          "rules": {
+            "loitering": {
+              "min_seconds": 20
+            },
+            "crowding": {
+              "max_count": 2,
+              "min_seconds": 3
+            }
+          }
+        },
+        {
+          "id": "restricted",
+          "name": "Right third (test restricted area)",
+          "criticality": 3,
+          "polygon_px": [
+            [
+              853,
+              0
+            ],
+            [
+              1280,
+              0
+            ],
+            [
+              1280,
+              720
+            ],
+            [
+              853,
+              720
+            ]
+          ],
+          "rules": {
+            "intrusion": {
+              "min_seconds": 2
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

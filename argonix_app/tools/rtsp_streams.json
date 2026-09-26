@@ -1,0 +1,10 @@
+{
+  "_doc": "Streams published by tools/rtsp_replay.ps1. 'file' is relative to the datasets root (default %USERPROFILE%/argonix_datasets, see tools/datasets.py) or to argonix_app/. Each stream is published as <name> (main: 'copy' = the clip's own H.264, 'encode' = re-encoded, 'none' = no main) and <name>_sub (scaled to sub_width, H.264 ~800 kb/s, keyframe every 2 s). 'gray': true publishes both as a black-and-white camera would (luma only, neutral chroma). 'fault' is published only as <name>_sub: up for up_s seconds (frozen picture from freeze_at_s for freeze_s seconds), then gone for down_s seconds, repeating.",
+  "streams": [
+    {"name": "vtest", "file": "data/real/vtest.avi", "sub_width": 640, "main": "encode"},
+    {"name": "street", "file": "data/real/social-distance/pedestrian.mp4", "sub_width": 640, "main": "copy"},
+    {"name": "street_bw", "file": "data/real/social-distance/pedestrian.mp4", "sub_width": 640, "main": "encode", "gray": true}
+  ],
+  "fault": {"name": "flaky", "file": "data/real/social-distance/pedestrian.mp4", "sub_width": 640, "fps": 24,
+            "up_s": 90, "down_s": 20, "freeze_at_s": 20, "freeze_s": 40}
+}

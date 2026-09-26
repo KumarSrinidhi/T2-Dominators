@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "model": "data\\models\\thirdparty\\vit_violence",
+    "id2label": {
+      "0": "LABEL_0",
+      "1": "LABEL_1"
+    },
+    "violent_id": 1,
+    "device": "cuda:0",
+    "ms_per_frame": 2.4,
+    "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU"
+  },
+  "clip_score": "max over frames (and mean) of P(violent)",
+  "label_mapping": {
+    "chosen_on": "RWF-2000 train, 102 clips (not scored below)",
+    "auc_if_output_is_violent": 0.6135,
+    "auc_if_other_output_is_violent": 0.3865,
+    "violent_output": "output 1"
+  },
+  "hockey_max": {
+    "n": 1000,
+    "threshold": 0.5,
+    "precision": 0.5051,
+    "recall": 0.994,
+    "fpr": 0.974,
+    "accuracy": 0.51,
+    "roc_auc": 0.4814,
+    "tp": 497,
+    "fp": 487,
+    "fn": 3,
+    "tn": 13
+  },
+  "hockey_mean": {
+    "n": 1000,
+    "threshold": 0.5,
+    "precision": 0.5126,
+    "recall": 0.98,
+    "fpr": 0.932,
+    "accuracy": 0.524,
+    "roc_auc": 0.5854,
+    "tp": 490,
+    "fp": 466,
+    "fn": 10,
+    "tn": 34
+  },
+  "normal_long_max": {
+    "clips": 5,
+    "hours": 0.0508,
+    "frames_ge_0.5": 123,
+    "frames": 371,
+    "onsets_per_hour": 314.8
+  },
+  "normal_long_mean": {
+    "clips": 5,
+    "hours": 0.0508,
+    "frames_ge_0.5": 123,
+    "frames": 371,
+    "onsets_per_hour": null
+  },
+  "rwf_val_max": {
+    "n": 352,
+    "threshold": 0.5,
+    "precision": 0.602,
+    "recall": 0.885,
+    "fpr": 0.7697,
+    "accuracy": 0.6023,
+    "roc_auc": 0.6324,
+    "tp": 177,
+    "fp": 117,
+    "fn": 23,
+    "tn": 35
+  },
+  "rwf_val_mean": {
+    "n": 352,
+    "threshold": 0.5,
+    "precision": 0.5907,
+    "recall": 0.765,
+    "fpr": 0.6974,
+    "accuracy": 0.5653,
+    "roc_auc": 0.59,
+    "tp": 153,
+    "fp": 106,
+    "fn": 47,
+    "tn": 46
+  }
+}

@@ -1,0 +1,7 @@
+version: 2
+updates:
+  # Keep the CI workflow's actions current. Python dependencies are pinned in argonix_app/uv.lock and updated by hand.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

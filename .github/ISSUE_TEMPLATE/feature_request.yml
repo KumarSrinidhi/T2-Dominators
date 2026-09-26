@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest a rule, integration or operator feature
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What an operator, supervisor or admin can't do today, and in what situation.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+      description: What should happen. For a new rule, say what is observed and what threshold decides it.
+    validations:
+      required: true
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Project rules (AGENTS.md)
+      options:
+        - label: It reports observable events and does not label or identify people from their appearance.
+          required: true
+        - label: If it uses a learned model, the model only corroborates (alerts it raises alone stay at P3 or below).

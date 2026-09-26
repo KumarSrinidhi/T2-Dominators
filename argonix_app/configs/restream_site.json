@@ -1,0 +1,42 @@
+{
+  "site": "Argus restream test site (WebRTC live + main-stream recording over the RTSP replay harness)",
+  "_doc": "Two replay cameras from tools/rtsp_replay.ps1: analytics read <name>_sub, the restreamer pulls <name> (the main stream, H.264 without B-frames, keyframe every 2 s). ${RTSP_USER}, ${RTSP_PASSWORD}, ${RTSP_HOST} and ${MEDIAMTX_BIN} are PLACEHOLDERS: copy this file to configs/restream_site.local.json (git-ignored) and replace them (README 'Smooth live view and main-stream recording' has a PowerShell one-liner). The restreamer is a SECOND MediaMTX that Argus starts itself (API 127.0.0.1:9987, WHEP 127.0.0.1:8889, ICE/UDP 8189), separate from the replay harness (RTSP :8554, API :9997). 'street' (main: copy of the Kaggle clip) is left out on purpose: its H.264 may contain B-frames, which WebRTC cannot play.",
+  "analytics_fps": 5,
+  "record": true,
+  "correlation_window_s": 15,
+  "detector": {"weights": "data/models/yolo26s.pt", "tracker": "bytetrack.yaml", "conf": 0.1, "imgsz": 480,
+               "device": "auto", "batched": true, "max_batch": 16, "max_wait_ms": 8},
+  "map": {"width_m": 30, "height_m": 24},
+  "restream": {
+    "enabled": true,
+    "mediamtx_bin": "${MEDIAMTX_BIN}",
+    "api": "http://127.0.0.1:9987",
+    "webrtc": "http://127.0.0.1:8889",
+    "webrtc_udp_port": 8189,
+    "webrtc_additional_hosts": [],
+    "record": {"enabled": true, "path": "<data>/main_rec", "segment_s": 60, "keep_days": 7}
+  },
+  "cameras": [
+    {
+      "id": "cam_campus", "name": "Campus path (vtest)",
+      "source": "rtsp://${RTSP_USER}:${RTSP_PASSWORD}@${RTSP_HOST}/vtest_sub",
+      "main_source": "rtsp://${RTSP_USER}:${RTSP_PASSWORD}@${RTSP_HOST}/vtest",
+      "zones": [
+        {"id": "lawn", "name": "Lawn (keep off)", "criticality": 2,
+         "polygon_px": [[0, 218], [250, 243], [358, 283], [517, 358], [633, 417], [633, 475], [0, 475]],
+         "rules": {"intrusion": {"min_seconds": 2.0}}}
+      ]
+    },
+    {
+      "id": "cam_street_bw", "name": "Street, black-and-white camera",
+      "source": "rtsp://${RTSP_USER}:${RTSP_PASSWORD}@${RTSP_HOST}/street_bw_sub",
+      "main_source": "rtsp://${RTSP_USER}:${RTSP_PASSWORD}@${RTSP_HOST}/street_bw",
+      "masks_px": [[[26, 225], [79, 225], [79, 259], [26, 259]]],
+      "zones": [
+        {"id": "view", "name": "Whole view", "criticality": 1,
+         "polygon_px": [[8, 8], [632, 8], [632, 352], [8, 352]],
+         "rules": {"crowding": {"max_count": 3, "min_seconds": 3}}}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0b0e14">
+<meta name="description" content="Argus: explainable multi-camera situational awareness.">
+<title>Argus</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='.55' stop-color='%233b6cf6'/%3E%3Cstop offset='1' stop-color='%237c3aed'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M9 23.5l7-14.5 7 14.5' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='18.6' r='2.3' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="static/app.css">
+<script src="static/js/theme.js"></script>
+<script type="module" src="static/js/app.js"></script>
+</head>
+<body>
+<div class="app" id="app">
+  <nav class="sidebar" id="sidebar" aria-label="Pages">
+    <div class="brand">
+      <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><defs><linearGradient id="axLogo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#3b6cf6"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(#axLogo)"/><path d="M6.5 11.2a11 11 0 0119 0" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.6" stroke-linecap="round"/><path d="M9 23.5l7-14.5 7 14.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="18.6" r="2.3" fill="#fff"/></svg>
+      <span class="wordmark"><span class="name">Argus</span><span class="tagline">Situational awareness</span></span>
+      <button class="ghost icon nav-close" id="navClose" type="button" aria-label="Close navigation"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="nav-groups" id="navGroups"><!-- built from the page registry (js/registry.js); the anchors below are legacy declarations --></div>
+    <a class="nav-item" href="#/live" data-page="live">
+      <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="M17 10l5-3v10l-5-3"/></svg>
+      <span class="lbl">Live</span><kbd class="kbd">1</kbd></a>
+    <a class="nav-item" href="#/review" data-page="review">
+      <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 4v6c0 5-4 9-9 10-5-1-9-5-9-10V6z"/></svg>
+      <span class="lbl">Review</span><span class="badge" id="badge" hidden>0</span><kbd class="kbd">2</kbd></a>
+    <a class="nav-item" href="#/map" data-page="map">
+      <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3L3 6v15l6-3 6 3 6-3V3l-6 3z"/><path d="M9 3v15M15 6v15"/></svg>
+      <span class="lbl">Map</span><kbd class="kbd">3</kbd></a>
+    <a class="nav-item" href="#/recordings" data-page="recordings">
+      <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
+      <span class="lbl">Recordings</span><kbd class="kbd">4</kbd></a>
+    <a class="nav-item" href="#/cameras" data-page="cameras">
+      <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>
+      <span class="lbl">Cameras</span><kbd class="kbd">5</kbd></a>
+    <a class="nav-item" href="#/system" data-page="system">
+      <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+      <span class="lbl">System</span><kbd class="kbd">6</kbd></a>
+    <div class="side-foot">Press <kbd>?</kbd> for shortcuts</div>
+  </nav>
+  <div class="nav-scrim" id="navScrim" hidden></div>
+  <div class="main-col">
+    <header class="topbar">
+      <button class="ghost icon" id="collapseBtn" type="button" title="Collapse sidebar ([)" aria-label="Toggle navigation" aria-controls="sidebar">
+        <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <div class="crumbs">
+        <button class="site-btn" id="siteBtn" type="button" aria-haspopup="dialog" aria-expanded="false" title="Site">
+          <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V5l8-3v19M12 8l8 3v10M2 21h20"/></svg>
+          <span id="siteName">Argus</span>
+          <svg class="i chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+        <span class="sep" aria-hidden="true">/</span>
+        <h1 id="pageTitle">Overview</h1>
+      </div>
+      <button class="search-btn" id="searchBtn" type="button" aria-label="Search and jump (Ctrl+K)">
+        <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg>
+        <span class="search-ph">Search cameras, alerts, pages…</span><kbd>Ctrl K</kbd></button>
+      <span class="grow"></span>
+      <span class="conn" id="conn" data-state="connecting" role="status" title="Live connection (WebSocket)"><span class="dot"></span><span id="connText">connecting…</span></span>
+      <button class="demo-pill" id="demoPill" type="button" hidden title="Demo (presenter) mode is on: click to turn off">Demo</button>
+      <span class="authoff" id="authOff" hidden role="note" title="Open demo mode: anyone who can reach this server has full access.">Open demo<span class="hide-sm"> · no sign-in</span></span>
+      <button class="ghost icon bell" id="bellBtn" type="button" aria-label="Notifications" aria-haspopup="dialog" aria-expanded="false" title="Notifications">
+        <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1112 0c0 7 3 8.5 3 8.5H3S6 15 6 8z"/><path d="M10 20.5a2.2 2.2 0 004 0"/></svg>
+        <span class="count" id="bellCount" hidden>0</span></button>
+      <button class="ghost icon" id="themeBtn" type="button" title="Toggle light/dark theme" aria-label="Toggle theme">
+        <svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button>
+      <div class="userbox" id="userbox"></div>
+    </header>
+    <main class="pages" id="pages" tabindex="-1">
+      <div id="boot" class="boot" role="status">
+        <div class="skel skel-line" style="width:220px;height:22px"></div>
+        <div class="boot-kpis"><div class="skel skel-kpi"></div><div class="skel skel-kpi"></div><div class="skel skel-kpi"></div><div class="skel skel-kpi"></div></div>
+        <div class="skel skel-tile"></div>
+        <noscript>Argus needs JavaScript.</noscript>
+        <span class="sr-only">Loading Argus… If this stays, the browser could not load /static/js/app.js (the server must mount /static).</span>
+      </div>
+    </main>
+    <footer class="statusbar" id="statusbar" aria-label="System status"></footer>
+  </div>
+  <nav class="tabbar" id="tabbar" aria-label="Primary"></nav>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Alert details"></aside>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<!-- Sign-in, first-run setup and forced password change screens are rendered here by static/js/account.js. -->
+<div class="login" id="login" hidden></div>
+<dialog id="dialog"></dialog>
+</body>
+</html>

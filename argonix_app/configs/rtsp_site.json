@@ -1,0 +1,61 @@
+{
+  "site": "Argus RTSP replay site (MediaMTX harness, tools/rtsp_replay.ps1)",
+  "_doc": "RTSP cameras as a real site would have them: analytics on each camera's sub-stream, a dedicated read-only 'viewer' account. ${RTSP_USER}, ${RTSP_PASSWORD} and ${RTSP_HOST} are PLACEHOLDERS: tools/rtsp_e2e.py fills them from the harness secrets file and adds every camera through POST /api/cameras. To run this file directly with run.py, copy it to configs/<name>.local.json (git-ignored) and replace the placeholders. Zones are drawn in sub-stream pixels (the cameras are added uncalibrated, as a newly connected camera is). The fault stream 'flaky_sub' drops for 20 s every 110 s and shows a frozen picture for 40 s of each cycle; it is read by two cameras with different reconnect settings.",
+  "analytics_fps": 5,
+  "record": true,
+  "correlation_window_s": 15,
+  "detector": {"weights": "data/models/yolo26s.pt", "tracker": "bytetrack.yaml", "conf": 0.1, "imgsz": 480,
+               "device": "auto", "batched": true, "max_batch": 16, "max_wait_ms": 8},
+  "map": {"width_m": 30, "height_m": 24},
+  "_e2e": {"fault_paths": ["flaky_sub"]},
+  "cameras": [
+    {
+      "id": "cam_campus", "name": "Campus path (vtest, RTSP sub-stream)",
+      "source": "rtsp://${RTSP_USER}:${RTSP_PASSWORD}@${RTSP_HOST}/vtest_sub",
+      "zones": [
+        {"id": "lawn", "name": "Lawn (keep off)", "criticality": 2,
+         "polygon_px": [[0, 218], [250, 243], [358, 283], [517, 358], [633, 417], [633, 475], [0, 475]],
+         "rules": {"intrusion": {"min_seconds": 2.0}}},
+        {"id": "sign", "name": "Sign / assembly point", "criticality": 1,
+         "polygon_px": [[275, 158], [400, 158], [400, 229], [275, 229]],
+         "rules": {"loitering": {"min_seconds": 15}}},
+        {"id": "path", "name": "Footpath", "criticality": 1,
+         "polygon_px": [[0, 162], [583, 137], [640, 167], [640, 392], [358, 250], [0, 204]],
+         "rules": {"crowding": {"max_count": 5, "min_seconds": 3}}}
+      ]
+    },
+    {
+      "id": "cam_street", "name": "Street (Kaggle clip, RTSP sub-stream)", "_e2e_main_vs_sub": true,
+      "source": "rtsp://${RTSP_USER}:${RTSP_PASSWORD}@${RTSP_HOST}/street_sub",
+      "masks_px": [[[26, 225], [79, 225], [79, 259], [26, 259]]],
+      "zones": [
+        {"id": "view", "name": "Whole view", "criticality": 1,
+         "polygon_px": [[8, 8], [632, 8], [632, 352], [8, 352]],
+         "rules": {"crowding": {"max_count": 3, "min_seconds": 3}, "loitering": {"min_seconds": 20}}}
+      ]
+    },
+    {
+      "id": "cam_street_bw", "name": "Street, black-and-white camera (grayscale RTSP)",
+      "source": "rtsp://${RTSP_USER}:${RTSP_PASSWORD}@${RTSP_HOST}/street_bw_sub",
+      "masks_px": [[[26, 225], [79, 225], [79, 259], [26, 259]]],
+      "zones": [
+        {"id": "view", "name": "Whole view", "criticality": 1,
+         "polygon_px": [[8, 8], [632, 8], [632, 352], [8, 352]],
+         "rules": {"crowding": {"max_count": 3, "min_seconds": 3}, "loitering": {"min_seconds": 20}}}
+      ]
+    },
+    {
+      "id": "cam_flaky", "name": "Flaky link, default reconnect (1-30 s backoff)",
+      "source": "rtsp://${RTSP_USER}:${RTSP_PASSWORD}@${RTSP_HOST}/flaky_sub",
+      "zones": [{"id": "view", "name": "Whole view", "polygon_px": [[8, 8], [632, 8], [632, 352], [8, 352]],
+                 "rules": {"loitering": {"min_seconds": 20}}}]
+    },
+    {
+      "id": "cam_flaky_fast", "name": "Flaky link, fast reconnect (0.5-4 s backoff)",
+      "source": "rtsp://${RTSP_USER}:${RTSP_PASSWORD}@${RTSP_HOST}/flaky_sub",
+      "reconnect_min_s": 0.5, "reconnect_max_s": 4, "down_grace_s": 2,
+      "zones": [{"id": "view", "name": "Whole view", "polygon_px": [[8, 8], [632, 8], [632, 352], [8, 352]],
+                 "rules": {"loitering": {"min_seconds": 20}}}]
+    }
+  ]
+}

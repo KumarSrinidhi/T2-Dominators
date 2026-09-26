@@ -1,0 +1,174 @@
+{
+  "name": "argonix-forecast-gru",
+  "version": "v20260925",
+  "feature_version": "fcst-v1",
+  "hidden": 64,
+  "pred_len": 12,
+  "obs_len": 8,
+  "dt_s": 0.4,
+  "params": 25540,
+  "epochs": 20,
+  "trained_on": "ETH/UCY (Trajectron++ mirror, leave-one-scene-out)",
+  "cv_rmse_per_step": [
+    0.038,
+    0.089,
+    0.151,
+    0.225,
+    0.307,
+    0.397,
+    0.493,
+    0.594,
+    0.7,
+    0.809,
+    0.922,
+    1.039
+  ],
+  "metrics": {
+    "protocol": "obs 8 x 0.4s -> pred 12 x 0.4s; ADE/FDE in metres; stride-1 windows",
+    "source": "ETH/UCY (Trajectron++ mirror, leave-one-scene-out)",
+    "folds": {
+      "eth": {
+        "n_windows": 364,
+        "gru": {
+          "ade": 1.014,
+          "fde": 2.074,
+          "ade_3.2s": 0.645,
+          "fde_3.2s": 1.229
+        },
+        "cv": {
+          "ade": 1.075,
+          "fde": 2.282,
+          "ade_3.2s": 0.662,
+          "fde_3.2s": 1.302
+        },
+        "sigma_coverage": {
+          "1sigma": 0.294,
+          "2sigma": 0.609,
+          "ideal": [
+            0.393,
+            0.865
+          ]
+        },
+        "best_epoch": 25,
+        "train_s": 249.7
+      },
+      "hotel": {
+        "n_windows": 1197,
+        "gru": {
+          "ade": 0.346,
+          "fde": 0.662,
+          "ade_3.2s": 0.234,
+          "fde_3.2s": 0.424
+        },
+        "cv": {
+          "ade": 0.319,
+          "fde": 0.614,
+          "ade_3.2s": 0.215,
+          "fde_3.2s": 0.39
+        },
+        "sigma_coverage": {
+          "1sigma": 0.66,
+          "2sigma": 0.915,
+          "ideal": [
+            0.393,
+            0.865
+          ]
+        },
+        "best_epoch": 20,
+        "train_s": 167.9
+      },
+      "univ": {
+        "n_windows": 24334,
+        "gru": {
+          "ade": 0.514,
+          "fde": 1.131,
+          "ade_3.2s": 0.299,
+          "fde_3.2s": 0.639
+        },
+        "cv": {
+          "ade": 0.524,
+          "fde": 1.165,
+          "ade_3.2s": 0.303,
+          "fde_3.2s": 0.651
+        },
+        "sigma_coverage": {
+          "1sigma": 0.526,
+          "2sigma": 0.802,
+          "ideal": [
+            0.393,
+            0.865
+          ]
+        },
+        "best_epoch": 13,
+        "train_s": 51.2
+      },
+      "zara1": {
+        "n_windows": 2356,
+        "gru": {
+          "ade": 0.437,
+          "fde": 0.982,
+          "ade_3.2s": 0.252,
+          "fde_3.2s": 0.539
+        },
+        "cv": {
+          "ade": 0.427,
+          "fde": 0.952,
+          "ade_3.2s": 0.248,
+          "fde_3.2s": 0.529
+        },
+        "sigma_coverage": {
+          "1sigma": 0.716,
+          "2sigma": 0.93,
+          "ideal": [
+            0.393,
+            0.865
+          ]
+        },
+        "best_epoch": 25,
+        "train_s": 103.8
+      },
+      "zara2": {
+        "n_windows": 5910,
+        "gru": {
+          "ade": 0.321,
+          "fde": 0.715,
+          "ade_3.2s": 0.185,
+          "fde_3.2s": 0.398
+        },
+        "cv": {
+          "ade": 0.324,
+          "fde": 0.724,
+          "ade_3.2s": 0.186,
+          "fde_3.2s": 0.402
+        },
+        "sigma_coverage": {
+          "1sigma": 0.766,
+          "2sigma": 0.92,
+          "ideal": [
+            0.393,
+            0.865
+          ]
+        },
+        "best_epoch": 18,
+        "train_s": 234.3
+      }
+    },
+    "average": {
+      "gru": {
+        "ade": 0.526,
+        "fde": 1.113,
+        "ade_3.2s": 0.323,
+        "fde_3.2s": 0.646
+      },
+      "cv": {
+        "ade": 0.534,
+        "fde": 1.147,
+        "ade_3.2s": 0.323,
+        "fde_3.2s": 0.655
+      }
+    },
+    "hardware": "AMD64 Family 23 Model 160 Stepping 0, AuthenticAMD (Windows 11), torch 2.14.0+cpu, 4 threads, CPU",
+    "measured_at": "2026-09-25 16:21"
+  },
+  "train_total_s": 1086.0
+}

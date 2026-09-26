@@ -1,0 +1,17 @@
+.venv/
+data/
+*.pt
+__pycache__/
+app.pid
+app.log
+configs/users.json
+configs/*.local.json
+configs/*.local.json.bak
+configs/*.local.json.tmp
+datasets/*.tmp
+# camera credentials (Site.save_config keeps them out of the site config) and config write-side files
+configs/*.secrets.json
+configs/*.bak
+configs/*.tmp
+# ESP32 Wi-Fi credentials (copy secrets.example.h to secrets.h)
+firmware/**/secrets.h

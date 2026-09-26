@@ -1,0 +1,52 @@
+[project]
+name = "argonix"
+version = "0.1.0"
+description = "Argus: explainable multi-camera situational awareness for existing CCTV (research demo)"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "ultralytics>=8.3",
+    "lap>=0.5",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "httpx>=0.27",
+    "psutil>=5.9",
+    "pytest>=8",
+    "imageio-ffmpeg>=0.5",  # static ffmpeg (libx264) for machines without a system ffmpeg
+]
+
+# Pick exactly one:  uv sync --extra cpu   |   --extra cu126 (driver >= 527, e.g. 566 = CUDA 12.7)   |   --extra cu128
+[project.optional-dependencies]
+cpu = ["torch>=2.6", "torchvision>=0.21"]
+cu126 = ["torch>=2.6", "torchvision>=0.21"]
+cu128 = ["torch>=2.6", "torchvision>=0.21"]
+
+[tool.uv]
+package = false
+conflicts = [[{ extra = "cpu" }, { extra = "cu126" }, { extra = "cu128" }]]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", extra = "cpu" }, { index = "pytorch-cu126", extra = "cu126" }, { index = "pytorch-cu128", extra = "cu128" }]
+torchvision = [{ index = "pytorch-cpu", extra = "cpu" }, { index = "pytorch-cu126", extra = "cu126" }, { index = "pytorch-cu128", extra = "cu128" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: runs a real YOLO detector over whole videos (minutes on a CPU); CI deselects them with -m \"not slow\"",
+    "gpu: needs a CUDA GPU (skipped automatically without one, see tests/conftest.py)",
+]

@@ -1,0 +1,190 @@
+{
+ "meta": {
+  "date": "2026-09-25",
+  "started": "2026-09-25T20:50:03",
+  "hardware": {
+   "host": "ByteForge",
+   "os": "Windows-11-10.0.26100-SP0",
+   "cpu": "AMD64 Family 23 Model 160 Stepping 0, AuthenticAMD",
+   "cpu_count": 8,
+   "torch": "2.14.0+cpu"
+  },
+  "detector": {
+   "weights": "C:/Users/Ivermectin/Desktop/Argonix/argonix_app/data/models/yolo26n.pt",
+   "tracker": "bytetrack.yaml",
+   "conf": 0.3,
+   "imgsz": 480,
+   "device": "cpu",
+   "batched": null,
+   "max_batch": 16,
+   "max_wait_ms": 8
+  },
+  "smoke": true,
+  "command": "tools/eval_datasets.py --only caviar --clips Fight_RunAway1 --fetch --device cpu --imgsz 480 --weights C:/Users/Ivermectin/Desktop/Argonix/argonix_app/data/models/yolo26n.pt --label laptop-smoke --smoke"
+ },
+ "space": "image_px",
+ "calibration": {
+  "state": "none",
+  "note": "CAVIAR publishes no ground-plane calibration: zones and thresholds are in image pixels; running uses body-heights/s"
+ },
+ "rules": {
+  "loitering": {
+   "min_seconds": 20
+  },
+  "crowding": {
+   "max_count": 1,
+   "min_seconds": 3
+  },
+  "running": {
+   "speed_bh_s": 1.5,
+   "min_seconds": 1.0
+  }
+ },
+ "altercation_enabled": false,
+ "analytics_fps": 5.0,
+ "matching": {
+  "temporal_tolerance_s": 2.0,
+  "proximity_px": 30.0,
+  "rule": "an event is a true positive when its interval overlaps a ground-truth episode (+-tolerance) of the target behaviour in the same clip AND, in a shared frame of that overlap, the centre of one of the event's track boxes is within proximity_px of the episode's box (group box or a member's box). Many-to-one both ways: precision = true events / events, recall = episodes hit / episodes.",
+  "episodes": "CVML labels: running = object movement 'running' >= 1 s; fighting = group context/situation 'fighting' >= 1 s; meeting = group context 'meeting' >= 3 s; browsing_or_inactive_20s = object situation browsing/inactive or movement inactive >= 20 s; left_object = role 'leaving object'. Runs merged over <= 0.5 s gaps."
+ },
+ "runs": {
+  "colour": {
+   "summary": {
+    "clips": 1,
+    "frames": 110,
+    "duration_s": 22.3,
+    "tracks_10plus": 0,
+    "dets_per_frame": 0.05,
+    "mean_det_conf": 0.492,
+    "detect_ms_median": 12120.2,
+    "median_moving_speed_mps": null,
+    "monochrome": [
+     "False"
+    ],
+    "events_by_rule": {}
+   },
+   "scores": {
+    "browsing_or_inactive_20s vs loitering": {
+     "gt_episodes": 0,
+     "events": 0,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": null,
+     "precision_wilson95": null,
+     "recall": null,
+     "recall_wilson95": null,
+     "behaviour": "browsing_or_inactive_20s",
+     "rule": "loitering",
+     "role": "primary: dwell >= 20 s",
+     "rule_enabled": true
+    },
+    "running vs running": {
+     "gt_episodes": 2,
+     "events": 0,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": null,
+     "precision_wilson95": null,
+     "recall": 0.0,
+     "recall_wilson95": [
+      0.0,
+      0.658
+     ],
+     "behaviour": "running",
+     "rule": "running",
+     "role": "primary",
+     "rule_enabled": true
+    },
+    "meeting vs crowding": {
+     "gt_episodes": 0,
+     "events": 0,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": null,
+     "precision_wilson95": null,
+     "recall": null,
+     "recall_wilson95": null,
+     "behaviour": "meeting",
+     "rule": "crowding",
+     "role": "proxy: > 1 person in view is not a meeting",
+     "rule_enabled": true
+    },
+    "fighting vs altercation": {
+     "gt_episodes": 1,
+     "events": 0,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": null,
+     "precision_wilson95": null,
+     "recall": 0.0,
+     "recall_wilson95": [
+      0.0,
+      0.793
+     ],
+     "behaviour": "fighting",
+     "rule": "altercation",
+     "role": "primary (only with --threats)",
+     "rule_enabled": false
+    },
+    "fighting vs running": {
+     "gt_episodes": 1,
+     "events": 0,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": null,
+     "precision_wilson95": null,
+     "recall": 0.0,
+     "recall_wilson95": [
+      0.0,
+      0.793
+     ],
+     "behaviour": "fighting",
+     "rule": "running",
+     "role": "secondary",
+     "rule_enabled": true
+    },
+    "left_object (no Argus rule)": {
+     "gt_episodes": 0,
+     "events": 0,
+     "true_events": 0,
+     "detected_episodes": 0,
+     "precision": null,
+     "precision_wilson95": null,
+     "recall": null,
+     "recall_wilson95": null,
+     "behaviour": "left_object",
+     "rule": null,
+     "role": "no Argus rule",
+     "rule_enabled": false
+    }
+   },
+   "per_clip": {
+    "Fight_RunAway1": {
+     "gt_episodes": {
+      "running": 2,
+      "fighting": 1
+     },
+     "events_by_rule": {},
+     "tracks_10plus": 0,
+     "dets_per_frame": 0.05,
+     "frames": 551,
+     "events": []
+    }
+   },
+   "wall_s": 1076.7,
+   "model": {
+    "detector": "yolo26n.pt",
+    "tracker": "bytetrack.yaml",
+    "framework": "ultralytics 8.4.161",
+    "conf_threshold": 0.3,
+    "imgsz": 480,
+    "device": "cpu",
+    "fp16": false,
+    "runtime": "torch",
+    "batched": false
+   }
+  }
+ },
+ "eval_wall_s": 1102.5
+}
